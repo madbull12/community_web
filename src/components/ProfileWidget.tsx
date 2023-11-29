@@ -15,22 +15,24 @@ import {
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import UserAvatar from "./UserAvatar";
+import { User } from "next-auth";
 
-
-const ProfileWidget: FC = () => {
+type Props = {
+  user: User;
+};
+const ProfileWidget: FC<Props> = ({ user }) => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger
-          className="flex-[0.2] group focus:outline-none  cursor-pointer p-2 hover:bg-violet-50 rounded-sm transition-all ease-in-out duration-100"
-        >
+        <DropdownMenuTrigger className="flex-[0.2] group focus:outline-none  cursor-pointer p-2 hover:bg-violet-50 rounded-sm transition-all ease-in-out duration-100">
           <section className="flex items-center gap-x-2 ">
-            <Avatar className="rounded-sm ">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div className="mr-auto">
-              <p className="text-sm">Andrian</p>
+            <UserAvatar
+              src={user?.image as string}
+              className="rounded-sm"
+              fallback={user?.name?.split("")[0].charAt(0) as string}
+            />
+            <div className="mr-auto flex flex-col items-start">
+              <p className="text-sm">{user.name}</p>
               <p className="text-xs ">
                 Points: <span className="text-gray-500">22</span>
               </p>
