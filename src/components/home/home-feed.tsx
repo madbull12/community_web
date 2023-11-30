@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import CreatePostWidget from './CreatePostWidget'
+import CreatePostWidget from './create-post-widget'
 import { auth } from '@/auth';
 import { User } from 'next-auth';
 

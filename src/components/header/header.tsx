@@ -1,8 +1,8 @@
 "use client"
 
 import React, { FC } from 'react'
-import Logo from './Logo'
-import ProfileWidget from './ProfileWidget'
+import Logo from '@/components/logo'
+import ProfileWidget from './profile-widget'
 import { Session, User } from 'next-auth'
 
 type Props = {

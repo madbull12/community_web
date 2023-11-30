@@ -1,6 +1,4 @@
-import { auth } from "@/auth";
-import HomeFeed from "@/components/HomeFeed";
-import { redirect } from "next/navigation";
+import HomeFeed from "@/components/home/home-feed";
 
 export default async function Home() {
 

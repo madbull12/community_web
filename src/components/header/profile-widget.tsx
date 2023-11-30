@@ -1,20 +1,18 @@
 "use client";
 
-import React, { FC, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import React, { FC } from "react";
 import { ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
-import UserAvatar from "./UserAvatar";
+} from "../ui/dropdown-menu";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
+import UserAvatar from "../user-avatar";
 import { User } from "next-auth";
 
 type Props = {

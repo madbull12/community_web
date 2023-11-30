@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import UserAvatar from "./UserAvatar";
-import { Input } from "./ui/input";
+import UserAvatar from "@/components/user-avatar";
+import { Input } from "@/components/ui/input";
 import { UserProps } from "@/interface/users";
 
 
