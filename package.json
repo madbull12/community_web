@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "shx rm -rf node_modules/pg-cloudflare"
   },
   "dependencies": {
     "@auth/core": "^0.18.4",
@@ -23,7 +24,7 @@
     "lucide-react": "^0.293.0",
     "next": "14.0.3",
     "next-auth": "5.0.0-beta.4",
-    "pg": "^8.11.3",
+    "pg": "8.10.0",
     "postgres": "^3.4.3",
     "react": "^18",
     "react-dom": "^18",
