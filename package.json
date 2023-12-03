@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "shx rm -rf node_modules/pg-cloudflare"
+    "postinstall": "shx rm -rf node_modules/pg-cloudflare",
+    "db-push": "drizzle-kit push:pg",
+    "db-generate": "drizzle-kit generate:pg",
+    "db-studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@auth/core": "^0.18.4",
@@ -28,6 +31,7 @@
     "postgres": "^3.4.3",
     "react": "^18",
     "react-dom": "^18",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
   },

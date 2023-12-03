@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1701586457154,
+      "tag": "0000_old_black_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1701614127505,
+      "tag": "0001_even_firelord",
+      "breakpoints": true
+    }
+  ]
+}
