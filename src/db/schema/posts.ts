@@ -1,11 +1,11 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { pgTable, text } from "drizzle-orm/pg-core";
 import { users } from "./users";
 
 export const posts = pgTable("post",{
-    id: serial("id").notNull().primaryKey(),
+    id: text("id").notNull().primaryKey(),
     content: text('content'),
-    authorId:text("authorId").notNull()
+    authorId:text("authorId").notNull().references(()=>users.id,{ onDelete: "cascade" })
 })
 
 export const postsRelations = relations(posts, ({ one }) => ({
@@ -14,3 +14,5 @@ export const postsRelations = relations(posts, ({ one }) => ({
 		references: [users.id],
 	}),
 }));
+
+export type Post = typeof posts.$inferSelect;
