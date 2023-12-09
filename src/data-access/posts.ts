@@ -5,9 +5,9 @@ import { Post, posts } from "@/db/schema/posts";
 import { eq, and } from "drizzle-orm";
 
 export type PostDto = {
-  id: string;
+  id?: string;
   content: string | null;
-  authorId: string;
+  authorId?: string;
 };
 
 export type CreatePostDto = {
@@ -48,7 +48,7 @@ export async function deletePost(postId: PostId): Promise<void> {
 }
 
 export async function updatePost(post: PostDto): Promise<void> {
-  await db.update(posts).set(post).where(eq(posts.id, post.id));
+  await db.update(posts).set(post).where(eq(posts.id, post?.id as string));
 }
 
 export async function getPost(postId: PostId): Promise<PostDto> {

@@ -2,6 +2,8 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import GitHub from "next-auth/providers/GitHub";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/drizzle";
+// import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
+// import { unstable_noStore } from "next/cache";
 
 export const authConfig = {
   providers: [GitHub],
@@ -27,4 +29,14 @@ export const authConfig = {
   },
 } satisfies NextAuthConfig;
 
-export const { handlers, auth, signOut } = NextAuth(authConfig);
+export const { handlers,auth,  signOut } = NextAuth(authConfig);
+// export async function auth(
+//   ...args:
+//     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+//     | [NextApiRequest, NextApiResponse]
+//     | []
+// ) {
+//   unstable_noStore();
+//   const session = await getServerSession(...args, authConfig);
+//   return { getUser: () => session?.user && { userId: session.user.id } };
+// }

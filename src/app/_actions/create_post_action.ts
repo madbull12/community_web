@@ -1,77 +1,77 @@
 "use server"
 
-import { auth } from "@/auth";
-import { revalidatePath } from "next/cache";
-
-
+import { auth } from "@/auth"
+import { ValidationError, createPostUseCase } from "@/use-cases/posts"
+import { User } from "next-auth"
+import { createPost } from "@/data-access/posts"
+import { revalidatePath } from "next/cache"
 
 type Form = {
-    name: string;
-    quantity: string;
-  };
-  
-  type CreateItemState = { form: Form } & (
-    | {
-        status: "success";
-      }
-    | {
-        status: "error";
-        errors: string;
-      }
-    | {
-        status: "field-errors";
-        errors: Partial<Record<keyof Form, string>>;
-      }
-    | {
-        status: "default";
-      }
-  );
+  content:string;
+}
 
-export async function createItemAction(
-    state: CreateItemState,
-    formData: FormData
-  ): Promise<CreateItemState> {
-    const session = await auth();
-  
-    const submittedForm = {
-      name: formData.get("name") as string,
-      quantity: formData.get("quantity") as string,
+type CreatePostState = { form: Form } & (
+  | {
+      status: "success";
+    }
+  | {
+      status: "error";
+      errors: string;
+    }
+  | {
+      status: "field-errors";
+      errors: Partial<Record<keyof Form, string>>;
+    }
+  | {
+      status: "default";
+    }
+);
+
+
+
+export const createPostAction = async(state:CreatePostState,formData:FormData):Promise<CreatePostState>=>{
+
+
+  const submittedForm = {
+    content:formData.get("content"),
+  }
+
+  const user = await auth()
+
+  try {
+    await createPostUseCase({
+      user:user?.user as User,
+      createPost:(submittedForm)=>submittedForm
+
+    },{
+      content:submittedForm.content as string,
+      
+    })
+    revalidatePath("/");
+    return {
+      form:{
+        content:""
+      },
+      status:"success",
+
     };
-  
-    try {
-      await createItemUseCase(
-        {
-          getUser,
-          createItem,
-          getUserItemByName,
-        },
-        {
-          name: submittedForm.name.toLowerCase(),
-          quantity: parseInt(submittedForm.quantity),
-        }
-      );
-      revalidatePath("/");
+  }catch(err) {
+    const error = err as Error;
+    if (error instanceof ValidationError) {
       return {
-        form: {
-          name: "",
-          quantity: "1",
-        },
-        status: "success",
+        form: submittedForm as Form,
+        status: "field-errors",
+        errors: error.getErrors(),
       };
-    } catch (err) {
-      const error = err as Error;
-      if (error instanceof ValidationError) {
-        return {
-          form: submittedForm,
-          status: "field-errors",
-          errors: error.getErrors(),
-        };
-      } else {
-        return {
-          form: submittedForm,
-          status: "error",
-          errors: error.message,
-        };
-      }
+    } else {
+      return {
+        form: submittedForm as Form,
+
+        status: "error",
+        errors: error.message,
+      };
     }
   }
+
+
+}

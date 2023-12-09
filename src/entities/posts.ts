@@ -2,11 +2,11 @@ import { ZodError, z } from "zod";
 
 type ValidatedFields = "content" | "authorId";
 
-export class ItemEntityValidationError extends Error {
+export class PostEntityValidationError extends Error {
   private errors: Record<ValidatedFields, string | undefined>;
 
   constructor(errors: Record<ValidatedFields, string | undefined>) {
-    super("An error occured validating an item entity");
+    super("An error occured validating a post entity");
     this.errors = errors;
   }
 
@@ -25,7 +25,7 @@ export class PostEntity {
     content,
     authorId,
   }: {
-    id: string;
+    id?: string;
     content: string;
     authorId: string;
   }) {
@@ -37,12 +37,17 @@ export class PostEntity {
   getContent() {
     return this.content;
   }
+  getAuthorId() {
+    return this.authorId;
+  }
+  getId() {
+    return this.id;
+  }
 
   validate() {
     const itemSchema = z.object({
-      content:z.string().min(1),
+      content: z.string().min(1),
       authorId: z.string().min(1),
-      
     });
 
     try {
@@ -50,9 +55,9 @@ export class PostEntity {
     } catch (err) {
       const error = err as ZodError;
       const errors = error.flatten().fieldErrors;
-      throw new ItemEntityValidationError({
+      throw new PostEntityValidationError({
         content: errors.content?.[0],
-        authorId:errors.authorId?.[0]
+        authorId: errors.authorId?.[0],
       });
     }
   }
