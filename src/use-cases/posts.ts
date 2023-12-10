@@ -1,9 +1,9 @@
-import { PostDto } from "@/data-access/posts";
+import { CreatePostDto, PostDto } from "@/data-access/posts";
 import { PostEntity, PostEntityValidationError } from "@/entities/posts";
 import { User } from "next-auth";
 
 // type UserProps = User;
-type CreatePost =(postDto:PostDto) => void;
+type CreatePost =(postDto:CreatePostDto) => void;
 
 type CreatePostCtx = {
   user:User
@@ -32,7 +32,7 @@ export class AuthenticationError extends Error {
 
 // type PostWithoutId = Omit<PostDto,"id">
 
-export const postToCreateDtoMapper = (postEntity:PostEntity):PostDto=> {
+export const postToCreateDtoMapper = (postEntity:PostEntity):CreatePostDto=> {
     return {
         content:postEntity.getContent(),
         authorId:postEntity.getAuthorId(),

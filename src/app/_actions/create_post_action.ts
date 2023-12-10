@@ -41,7 +41,7 @@ export const createPostAction = async(state:CreatePostState,formData:FormData):P
   try {
     await createPostUseCase({
       user:user?.user as User,
-      createPost:(submittedForm)=>submittedForm
+      createPost
 
     },{
       content:submittedForm.content as string,
