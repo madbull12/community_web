@@ -3,11 +3,13 @@ import "server-only";
 import { db } from "@/lib/drizzle";
 import { Post, posts } from "@/db/schema/posts";
 import { eq, and } from "drizzle-orm";
+import { User } from "next-auth";
 
 export type PostDto = {
   id?: string;
   content: string | null;
   authorId?: string;
+  author: User;
 };
 
 export type CreatePostDto = {
@@ -17,17 +19,22 @@ export type CreatePostDto = {
 
 export type PostId = string;
 
-const toDtoMapper = (post: Post) => {
+const toDtoMapper = (post: PostDto) => {
   return {
     id: post.id,
     content: post.content,
     authorId: post.authorId,
+    author: post.author,
   };
 };
 
 export const getPosts = async (): Promise<PostDto[]> => {
-  const posts = await db.query.posts.findMany({});
-  return posts.map(toDtoMapper);
+  const posts = await db.query.posts.findMany({
+    with: {
+      author: true,
+    },
+  });
+  return posts.map((post) => toDtoMapper(post));
 };
 
 export async function createPost(post: CreatePostDto): Promise<void> {
@@ -35,25 +42,30 @@ export async function createPost(post: CreatePostDto): Promise<void> {
 }
 
 export async function deletePost(postId: PostId): Promise<void> {
-
   const postToDelete = await db.query.posts.findFirst({
-    where:eq(posts.id,postId)
+    where: eq(posts.id, postId),
   });
 
-  if(!postToDelete) {
-    throw new Error("Post not found!")
+  if (!postToDelete) {
+    throw new Error("Post not found!");
   }
 
   await db.delete(posts).where(eq(posts.id, postId));
 }
 
 export async function updatePost(post: PostDto): Promise<void> {
-  await db.update(posts).set(post).where(eq(posts.id, post?.id as string));
+  await db
+    .update(posts)
+    .set(post)
+    .where(eq(posts.id, post?.id as string));
 }
 
 export async function getPost(postId: PostId): Promise<PostDto> {
   const post = await db.query.posts.findFirst({
     where: eq(posts.id, postId),
+    with: {
+      author: true,
+    },
   });
 
   if (!post) {
@@ -69,6 +81,9 @@ export async function getPostsByUserId(
 ): Promise<PostDto[]> {
   const postsByUserId = await db.query.posts.findMany({
     where: and(eq(posts.id, postId), eq(posts.authorId, userId)),
+    with: {
+      author: true,
+    },
   });
 
   return postsByUserId.map(toDtoMapper);
