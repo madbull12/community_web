@@ -1,11 +1,12 @@
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { users } from "./users";
 
 export const posts = pgTable("post",{
     id: text("id").notNull().primaryKey().default(sql`gen_random_uuid()`),
     content: text('content'),
-    authorId:text("authorId").notNull().references(()=>users.id,{ onDelete: "cascade" })
+    authorId:text("authorId").notNull().references(()=>users.id,{ onDelete: "cascade" }),
+	createdAt: timestamp('created_at').notNull().defaultNow(),
 })
 
 export const postsRelations = relations(posts, ({ one }) => ({
