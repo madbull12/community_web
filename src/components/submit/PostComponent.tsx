@@ -11,6 +11,7 @@ import { useFormState } from "react-dom";
 import { createPostAction } from "@/app/_actions/create_post_action";
 import MediaSection from "./MediaSection";
 import { Button } from "../ui/button";
+import LinkSection from "./LinkSection";
 
 const PostSubmitComponent = () => {
   const { toast, dismiss } = useToast();
@@ -55,7 +56,9 @@ const PostSubmitComponent = () => {
         <TabsContent value="media">
           <MediaSection />
         </TabsContent>
-        <TabsContent value="link"></TabsContent>
+        <TabsContent value="link">
+          <LinkSection />
+        </TabsContent>
         <TabsContent value="poll"></TabsContent>
         <div className="flex items-center gap-x-2 mt-4 justify-end">
           <Button className="rounded-full" variant={"outline"}>

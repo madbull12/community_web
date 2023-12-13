@@ -5,7 +5,7 @@ const PostSection = () => {
     const [value, setValue] = useState('');
   return (
         <ReactQuill  theme="snow" value={value} onChange={setValue} style={{}}>
- 
+            
         </ReactQuill>
   )
 }
