@@ -1,10 +1,7 @@
 import React from "react";
-import {Accept} from "react-dropzone";
+import { Accept } from "react-dropzone";
 import Dropzone from "./Dropzone";
 
-const fileTypes = {
-
-};
 const MediaSection = () => {
   return (
     <div className="min-h-[300px] border border-dashed border-violet-400 grid place-items-center">
@@ -12,7 +9,7 @@ const MediaSection = () => {
             <p>Drag and drop an image or</p>
             <Button variant={"outline"}>Upload</Button>
         </div> */}
-<Dropzone />
+      <Dropzone />
     </div>
   );
 };
