@@ -36,12 +36,18 @@ export const postToCreateDtoMapper = (postEntity:PostEntity):CreatePostDto=> {
     return {
         content:postEntity.getContent(),
         authorId:postEntity.getAuthorId(),
+        title:postEntity.getTitle(),
+        media:postEntity.getMedia(),
+        link:postEntity.getLink(),
         // id:postEntity.getId() as string,
     }
 }
 
 export const createPostUseCase = async (ctx: CreatePostCtx,data:{
     content:string,
+    title:string,
+    // media:string,
+    link:string,
 }) => {
     const user = ctx.user
     if (!user) {
@@ -51,8 +57,11 @@ export const createPostUseCase = async (ctx: CreatePostCtx,data:{
 
     const newPost = new PostEntity({
         authorId:user.id,
-        content:data.content
-
+        content:data.content,
+        link:data.link,
+        title:data.title,
+        media:""
+        // media:data.media
     });
 
     try {

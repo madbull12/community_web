@@ -4,7 +4,7 @@ import { users } from "./users";
 
 export const posts = pgTable("post",{
     id: text("id").notNull().primaryKey().default(sql`gen_random_uuid()`),
-	title:text("title"),
+	title:text("title").notNull(),
 	media:text("media"),
 	link:text("link"),
     content: text('content'),

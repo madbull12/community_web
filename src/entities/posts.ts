@@ -19,19 +19,31 @@ export class PostEntity {
   private id?: string;
   private content: string;
   private authorId: string;
+  private title: string;
+  private media: string | null;
+  private link: string | null;
 
   constructor({
     id,
     content,
     authorId,
+    title,
+    media,
+    link
   }: {
     id?: string;
     content: string;
     authorId: string;
+    title:string;
+    media:string | null;
+    link:string | null
   }) {
     this.id = id;
     this.content = content;
     this.authorId = authorId;
+    this.title=title;
+    this.media=media;
+    this.link=link
   }
 
   getContent() {
@@ -42,6 +54,18 @@ export class PostEntity {
   }
   getId() {
     return this.id;
+  }
+
+  getTitle() {
+    return this.title
+  }
+
+  getMedia() {
+    return this.media
+  }
+
+  getLink() {
+    return this.link
   }
 
   validate() {

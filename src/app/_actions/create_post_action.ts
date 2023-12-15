@@ -34,6 +34,8 @@ export const createPostAction = async(state:CreatePostState,formData:FormData):P
 
   const submittedForm = {
     content:formData.get("content"),
+    title:formData.get("title"),
+    link:formData.get("link")
   }
 
   const user = await auth()
@@ -45,7 +47,8 @@ export const createPostAction = async(state:CreatePostState,formData:FormData):P
 
     },{
       content:submittedForm.content as string,
-      
+      title:submittedForm.title as string,
+      link:submittedForm.link as string
     })
     revalidatePath("/");
     return {

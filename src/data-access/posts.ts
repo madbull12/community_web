@@ -11,11 +11,17 @@ export type PostDto = {
   authorId?: string;
   author: User;
   createdAt:Date;
+  title:string;
+  media:string | null;
+  link:string | null;
 };
 
 export type CreatePostDto = {
   content: string;
   authorId: string;
+  title:string;
+  media:string | null;
+  link:string | null;
 };
 
 export type PostId = string;
@@ -26,6 +32,9 @@ const toDtoMapper = (post: PostDto) => {
     content: post.content,
     authorId: post.authorId,
     author: post.author,
+    media:post.media,
+    link:post.link,
+    title:post.title,
     createdAt:post.createdAt
   };
 };
