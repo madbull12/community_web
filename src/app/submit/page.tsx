@@ -1,4 +1,4 @@
-import PostSubmitComponent from "@/components/submit/PostComponent";
+import PostSubmitComponent from "@/components/submit/post-component";
 import { Button } from "@/components/ui/button";
 import React from "react";
 

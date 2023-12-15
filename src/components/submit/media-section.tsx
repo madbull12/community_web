@@ -1,6 +1,5 @@
 import React from "react";
-import { Accept } from "react-dropzone";
-import Dropzone from "./Dropzone";
+import Dropzone from "./dropzone";
 
 const MediaSection = () => {
   return (

@@ -1,20 +1,23 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { BookImage, BookText, Link, ListOrdered } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import TitleInput from "./TitleInput";
-import PostSection from "./PostSection";
+import TitleInput from "./title-input";
+import PostSection from "./post-section";
 import { useToast } from "../ui/use-toast";
 import { useFormState } from "react-dom";
 import { createPostAction } from "@/app/_actions/create_post_action";
-import MediaSection from "./MediaSection";
+import MediaSection from "./media-section";
 import { Button } from "../ui/button";
-import LinkSection from "./LinkSection";
+import LinkSection from "./link-section";
+import { cn } from "@/lib/utils";
 
 const PostSubmitComponent = () => {
   const { toast, dismiss } = useToast();
+  const [title, setTitle] = useState<string>("");
+
   const [formState, onCreatePostAction] = useFormState(createPostAction, {
     form: {
       content: "",
@@ -48,7 +51,11 @@ const PostSubmitComponent = () => {
         ref={formRef}
         action={onCreatePostAction}
       >
-        <TitleInput />
+        <Input
+          className="focus-visible:ring-violet-400"
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+        />
 
         <TabsContent value="post">
           <PostSection />
@@ -64,7 +71,9 @@ const PostSubmitComponent = () => {
           <Button className="rounded-full" variant={"outline"}>
             Save draft
           </Button>
-          <Button className="rounded-full px-4">Post</Button>
+          <Button className={cn("rounded-full px-4 ",{
+            "cursor-not-allowed" : title===""
+          })}>Post</Button>
         </div>
       </form>
     </Tabs>

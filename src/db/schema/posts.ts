@@ -4,6 +4,9 @@ import { users } from "./users";
 
 export const posts = pgTable("post",{
     id: text("id").notNull().primaryKey().default(sql`gen_random_uuid()`),
+	title:text("title"),
+	media:text("media"),
+	link:text("link"),
     content: text('content'),
     authorId:text("authorId").notNull().references(()=>users.id,{ onDelete: "cascade" }),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
