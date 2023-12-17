@@ -17,6 +17,11 @@ import { cn } from "@/lib/utils";
 const PostSubmitComponent = () => {
   const { toast, dismiss } = useToast();
   const [title, setTitle] = useState<string>("");
+  const [content,setContent] = useState<string>("");
+
+  // const handleContent = (e:React.FormEvent<HTMLInputElement>) => {
+  //   setContent(e.currentTarget.value)
+  // }
 
   const [formState, onCreatePostAction] = useFormState(createPostAction, {
     form: {
@@ -61,7 +66,7 @@ const PostSubmitComponent = () => {
         />
 
         <TabsContent value="post">
-          <PostSection />
+          <PostSection content={content} setContent={setContent} />
         </TabsContent>
         <TabsContent value="media">
           <MediaSection />
@@ -71,12 +76,12 @@ const PostSubmitComponent = () => {
         </TabsContent>
         <TabsContent value="poll"></TabsContent>
         <div className="flex items-center gap-x-2 mt-4 justify-end">
-          <Button className="rounded-full" variant={"outline"}>
+          <Button type="button" className="rounded-full" variant={"outline"}>
             Save draft
           </Button>
-          <Button className={cn("rounded-full px-4 ",{
+          <Button type="submit"  className={cn("rounded-full px-4 ",{
             "cursor-not-allowed" : title===""
-          })}>Post</Button>
+          })} disabled={title===""}>Post</Button>
         </div>
       </form>
     </Tabs>

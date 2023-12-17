@@ -17,7 +17,11 @@ const Post = ({ post }: { post: PostDto }) => {
           Posted by • {post.author.name} {moment(post.createdAt).fromNow()}
         </span>
       </div>
+      <div className="mt-2">
+      <p className="text-xl font-bold">{post.title}</p>
       <p>{post.content}</p>
+      </div>
+
     </div>
   );
 };

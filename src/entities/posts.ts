@@ -69,13 +69,15 @@ export class PostEntity {
   }
 
   validate() {
-    const itemSchema = z.object({
-      content: z.string().min(1),
+    const postSchema = z.object({
+      title:z.string().min(1),
+      link: z.array(z.string().url()),
+      content: z.string().nullable(),
       authorId: z.string().min(1),
     });
 
     try {
-      itemSchema.parse(this);
+      postSchema.parse(this);
     } catch (err) {
       const error = err as ZodError;
       const errors = error.flatten().fieldErrors;

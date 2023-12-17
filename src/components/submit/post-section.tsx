@@ -1,13 +1,24 @@
-import React, { useState } from 'react'
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-const PostSection = () => {
-    const [value, setValue] = useState('');
-  return (
-        <ReactQuill id='content'  theme="snow" value={value} onChange={setValue} style={{}}>
-            
-        </ReactQuill>
-  )
-}
+import React, { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-export default PostSection
+type Props = {
+  content: string;
+  setContent:React.Dispatch<React.SetStateAction<string>>
+}
+const PostSection = ({
+  content,
+  setContent
+}: Props) => {
+  return (
+    <ReactQuill
+      id="content"
+      theme="snow"
+      value={content}
+      onChange={setContent}
+      style={{}}
+    ></ReactQuill>
+  );
+};
+
+export default PostSection;

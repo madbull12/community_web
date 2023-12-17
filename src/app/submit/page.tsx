@@ -8,7 +8,7 @@ const SubmitPage = () => {
       <div className="flex-[.75]">
         <div className="w-full flex justify-between items-center p-2 border-b">
           <h2 className="font-semibold text-xl">Create a post</h2>
-          <Button>Drafted</Button>
+          <Button type="button">Drafted</Button>
         </div>
         <PostSubmitComponent />
         

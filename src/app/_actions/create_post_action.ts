@@ -33,7 +33,7 @@ type CreatePostState = { form: Form } & (
 
 export const createPostAction = async(state:CreatePostState,formData:FormData):Promise<CreatePostState>=>{
 
-
+  
   const submittedForm = {
     content:formData.get("content"),
     title:formData.get("title"),
