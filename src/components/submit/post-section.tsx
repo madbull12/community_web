@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 const PostSection = () => {
     const [value, setValue] = useState('');
   return (
-        <ReactQuill  theme="snow" value={value} onChange={setValue} style={{}}>
+        <ReactQuill id='content'  theme="snow" value={value} onChange={setValue} style={{}}>
             
         </ReactQuill>
   )

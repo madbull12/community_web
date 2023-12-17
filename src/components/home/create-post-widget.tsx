@@ -31,6 +31,8 @@ const CreatePostWidget: FC<UserProps> = ({ user }) => {
   const [formState, onCreatePostAction] = useFormState(createPostAction, {
     form: {
       content: "",
+      title:"",
+      link:""
     },
     status: "default",
   });
@@ -69,7 +71,7 @@ const CreatePostWidget: FC<UserProps> = ({ user }) => {
         <form ref={formRef} action={onCreatePostAction} className="w-full">
           <Input
             onClick={() => router.push("/submit")}
-            name="content"
+            // name="content"
             placeholder="Create Post"
             className="px-4 py-2 w-full bg-secondary focus-visible:ring-0 focus-visible:ring-offset-0"
           />

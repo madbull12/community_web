@@ -21,6 +21,8 @@ const PostSubmitComponent = () => {
   const [formState, onCreatePostAction] = useFormState(createPostAction, {
     form: {
       content: "",
+      title:"",
+      link:""
     },
     status: "default",
   });
@@ -55,6 +57,7 @@ const PostSubmitComponent = () => {
           className="focus-visible:ring-violet-400"
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
+          name="title"
         />
 
         <TabsContent value="post">

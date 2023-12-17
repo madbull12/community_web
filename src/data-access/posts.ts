@@ -45,7 +45,7 @@ export const getPosts = async (): Promise<PostDto[]> => {
       author: true,
     },
   });
-  return posts.map((post) => toDtoMapper(post));
+  return posts.map(toDtoMapper);
 };
 
 export async function createPost(post: CreatePostDto): Promise<void> {

@@ -8,6 +8,8 @@ import { revalidatePath } from "next/cache"
 
 type Form = {
   content:string;
+  title:string;
+  link:string;
 }
 
 type CreatePostState = { form: Form } & (

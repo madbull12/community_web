@@ -63,19 +63,19 @@ function Dropzone() {
             <TrashIcon className=" text-foreground " size={14} />
           </div>
         </div>
-      ) : null}
-      <div
-        {...getRootProps()}
-        className="h-full w-full flex items-center justify-center cursor-pointer"
-      >
-        <input {...getInputProps()} />
+      ) :  <div
+      {...getRootProps()}
+      className="h-full w-full flex items-center justify-center cursor-pointer"
+    >
+      <input {...getInputProps()} />
 
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        )}
-      </div>
+      {isDragActive ? (
+        <p>Drop the files here ...</p>
+      ) : (
+        <p>Drag 'n' drop some files here, or click to select files</p>
+      )}
+    </div>}
+     
     </div>
   );
 }

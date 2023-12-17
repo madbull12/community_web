@@ -3,7 +3,7 @@ import { Textarea } from '../ui/textarea'
 
 const LinkSection = () => {
   return (
-    <Textarea placeholder="Url" className="focus-visible:ring-violet-400" />
+    <Textarea placeholder="Url" className="focus-visible:ring-violet-400" name="link" />
   )
 }
 
