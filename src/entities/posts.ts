@@ -29,21 +29,21 @@ export class PostEntity {
     authorId,
     title,
     media,
-    link
+    link,
   }: {
     id?: string;
     content: string;
     authorId: string;
-    title:string;
-    media:string | null;
-    link:string[] | null
+    title: string;
+    media: string | null;
+    link: string[] | null;
   }) {
     this.id = id;
     this.content = content;
     this.authorId = authorId;
-    this.title=title;
-    this.media=media;
-    this.link=link
+    this.title = title;
+    this.media = media;
+    this.link = link;
   }
 
   getContent() {
@@ -57,20 +57,20 @@ export class PostEntity {
   }
 
   getTitle() {
-    return this.title
+    return this.title;
   }
 
   getMedia() {
-    return this.media
+    return this.media;
   }
 
   getLink() {
-    return this.link
+    return this.link;
   }
 
   validate() {
     const postSchema = z.object({
-      title:z.string().min(1),
+      title: z.string().min(1),
       link: z.array(z.string().url()),
       content: z.string().nullable(),
       authorId: z.string().min(1),
