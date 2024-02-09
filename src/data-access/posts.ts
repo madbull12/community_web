@@ -13,7 +13,7 @@ export type PostDto = {
   createdAt:Date;
   title:string;
   media:string | null;
-  link:string | null;
+  link:string[] | null;
 };
 
 export type CreatePostDto = {
@@ -21,7 +21,7 @@ export type CreatePostDto = {
   authorId: string;
   title:string;
   media:string | null;
-  link:string | null;
+  link:string[] | null;
 };
 
 export type PostId = string;

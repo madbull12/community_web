@@ -47,7 +47,7 @@ export const createPostUseCase = async (ctx: CreatePostCtx,data:{
     content:string,
     title:string,
     // media:string,
-    link:string,
+    link:string[]|null,
 }) => {
     const user = ctx.user
     if (!user) {

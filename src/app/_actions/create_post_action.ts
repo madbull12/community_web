@@ -50,7 +50,7 @@ export const createPostAction = async(state:CreatePostState,formData:FormData):P
     },{
       content:submittedForm.content as string,
       title:submittedForm.title as string,
-      link:submittedForm.link as string
+      link:submittedForm.link 
     })
     revalidatePath("/");
     return {

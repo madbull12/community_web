@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { BookImage, BookText, Link, ListOrdered } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import TitleInput from "./title-input";
 import PostSection from "./post-section";
 import { useToast } from "../ui/use-toast";
 import { useFormState } from "react-dom";
