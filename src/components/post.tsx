@@ -19,7 +19,9 @@ const Post = ({ post }: { post: PostDto }) => {
       </div>
       <div className="mt-2">
       <p className="text-xl font-bold">{post.title}</p>
-      <p>{post.content}</p>
+      <div dangerouslySetInnerHTML={{ __html: post.content as string }}>
+
+      </div>
       </div>
 
     </div>

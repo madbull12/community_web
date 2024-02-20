@@ -4,7 +4,8 @@ import "./globals.css";
 import Header from "@/components/header/header";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,9 +25,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header user={session?.user} />
-        {children}
-        <Toaster />
+        <EdgeStoreProvider>
+          <Header user={session?.user} />
+          {children}
+          <Toaster />
+        </EdgeStoreProvider>
       </body>
     </html>
   );

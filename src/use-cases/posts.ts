@@ -46,7 +46,7 @@ export const postToCreateDtoMapper = (postEntity:PostEntity):CreatePostDto=> {
 export const createPostUseCase = async (ctx: CreatePostCtx,data:{
     content:string,
     title:string,
-    // media:string,
+    media?:string,
     link:string[]|null,
 }) => {
     const user = ctx.user
@@ -60,7 +60,7 @@ export const createPostUseCase = async (ctx: CreatePostCtx,data:{
         content:data.content,
         link:data.link,
         title:data.title,
-        media:""
+        media:data?.media as string
         // media:data.media
     });
 

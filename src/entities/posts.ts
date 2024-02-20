@@ -1,3 +1,4 @@
+import { postSchema } from "@/lib/validations/posts";
 import { ZodError, z } from "zod";
 
 type ValidatedFields = "content" | "authorId";
@@ -69,12 +70,12 @@ export class PostEntity {
   }
 
   validate() {
-    const postSchema = z.object({
-      title: z.string().min(1),
-      link: z.array(z.string().url()),
-      content: z.string().nullable(),
-      authorId: z.string().min(1),
-    });
+    // const postSchema = z.object({
+    //   title: z.string().min(1),
+    //   link: z.array(z.string().url()),
+    //   content: z.string().nullable(),
+    //   authorId: z.string().min(1),
+    // });
 
     try {
       postSchema.parse(this);

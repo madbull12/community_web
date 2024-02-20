@@ -12,26 +12,16 @@ import MediaSection from "./media-section";
 import { Button } from "../ui/button";
 import LinkSection from "./link-section";
 import { cn } from "@/lib/utils";
+import PostForm from "./post-form";
 
 const PostSubmitComponent = () => {
-  const { toast, dismiss } = useToast();
-  const [title, setTitle] = useState<string>("");
-  const [content,setContent] = useState<string>("");
+
 
   // const handleContent = (e:React.FormEvent<HTMLInputElement>) => {
   //   setContent(e.currentTarget.value)
   // }
 
-  const [formState, onCreatePostAction] = useFormState(createPostAction, {
-    form: {
-      content: "",
-      title:"",
-      link:""
-    },
-    status: "default",
-  });
-  console.log(formState.status);
-  const formRef = useRef<HTMLFormElement>(null);
+
   return (
     <Tabs defaultValue="post" className="w-full mt-4">
       <TabsList className="w-full flex [&>*]:h-full  [&>*]:flex-[0.25] h-12">
@@ -52,14 +42,15 @@ const PostSubmitComponent = () => {
           Poll
         </TabsTrigger>
       </TabsList>
-      <form
+      <PostForm />
+      {/* <form
         className="p-4 bg-secondary"
         ref={formRef}
         action={onCreatePostAction}
       >
         <Input
           className="focus-visible:ring-violet-400"
-          onChange={(e) => setTitle(e.target.value)}
+          // onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
           name="title"
         />
@@ -82,7 +73,7 @@ const PostSubmitComponent = () => {
             "cursor-not-allowed" : title===""
           })} disabled={title===""}>Post</Button>
         </div>
-      </form>
+      </form> */}
     </Tabs>
   );
 };

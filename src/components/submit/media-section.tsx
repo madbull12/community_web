@@ -1,15 +1,23 @@
-import React from "react";
-import Dropzone from "./dropzone";
+import React, { useState } from "react";
+import { SingleImageDropzone } from "./single-image-dropzone";
+import useImageFileStore from "@/store/use-image-file";
 
 const MediaSection = () => {
+  // const { setFiles, files, preview, setPreview } = useImageFileStore();
+  const [file, setFile] = useState<File>();
   return (
-    <div className="min-h-[300px] border border-dashed border-violet-400 grid place-items-center">
-      {/* <div className='flex items-center gap-x-2'>
-            <p>Drag and drop an image or</p>
-            <Button variant={"outline"}>Upload</Button>
-        </div> */}
-      <Dropzone />
-    </div>
+    <SingleImageDropzone
+      width={0}
+      className="min-w-full min-h-[300px]"
+      height={0}
+      value={file}
+      dropzoneOptions={{
+        maxSize: 1024 * 1024 * 1,
+      }}
+      onChange={(file) => {
+        setFile(file);
+      }}
+    />
   );
 };
 

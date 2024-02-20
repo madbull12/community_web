@@ -5,14 +5,16 @@ import { ValidationError, createPostUseCase } from "@/use-cases/posts"
 import { User } from "next-auth"
 import { createPost } from "@/data-access/posts"
 import { revalidatePath } from "next/cache"
+import { PostSchema, postSchema } from "@/lib/validations/posts"
 
-type Form = {
+type Data = {
   content:string;
   title:string;
-  link:string;
+  link?:string[];
+  media?:string;
 }
 
-type CreatePostState = { form: Form } & (
+type CreatePostState = { data:Data } & (
   | {
       status: "success";
     }
@@ -22,7 +24,7 @@ type CreatePostState = { form: Form } & (
     }
   | {
       status: "field-errors";
-      errors: Partial<Record<keyof Form, string>>;
+      errors: Partial<Record<keyof Data, string>>;
     }
   | {
       status: "default";
@@ -31,14 +33,28 @@ type CreatePostState = { form: Form } & (
 
 
 
-export const createPostAction = async(state:CreatePostState,formData:FormData):Promise<CreatePostState>=>{
+export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promise<CreatePostState>=>{
+  const validatedFields = postSchema.safeParse(values);  
+  if (!validatedFields.success) {
+    return {
+        data:{
+          content:"",
+          title:"",
+          // link:[]
+        },
+        status:"error",
+        errors:"Invalid fields!"
+      }
+    
 
-  
-  const submittedForm = {
-    content:formData.get("content"),
-    title:formData.get("title"),
-    link:formData.get("link")
+    };
+
+  const { title,content } = validatedFields.data;
+  const submittedData = {
+    title,
+    content,
   }
+
 
   const user = await auth()
 
@@ -48,13 +64,20 @@ export const createPostAction = async(state:CreatePostState,formData:FormData):P
       createPost
 
     },{
-      content:submittedForm.content as string,
-      title:submittedForm.title as string,
-      link:submittedForm.link 
+      content,
+      title,
+      link:[]
     })
     revalidatePath("/");
+
+   
     return {
-      form:submittedForm as Form,
+      data:{
+        content,
+        title,
+        // link:[]
+      }
+      ,
       status:"success",
 
     };
@@ -62,13 +85,13 @@ export const createPostAction = async(state:CreatePostState,formData:FormData):P
     const error = err as Error;
     if (error instanceof ValidationError) {
       return {
-        form: submittedForm as Form,
+        data: submittedData as Data,
         status: "field-errors",
         errors: error.getErrors(),
       };
     } else {
       return {
-        form: submittedForm as Form,
+        data: submittedData as Data,
 
         status: "error",
         errors: error.message,
