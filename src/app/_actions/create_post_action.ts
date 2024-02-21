@@ -34,25 +34,27 @@ type CreatePostState = { data:Data } & (
 
 
 export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promise<CreatePostState>=>{
-  const validatedFields = postSchema.safeParse(values);  
-  if (!validatedFields.success) {
-    return {
-        data:{
-          content:"",
-          title:"",
-          // link:[]
-        },
-        status:"error",
-        errors:"Invalid fields!"
-      }
+  // const validatedFields = postSchema.safeParse(values);  
+  // if (!validatedFields.success) {
+  //   return {
+  //       data:{
+  //         content:"",
+  //         title:"",
+  //         // link:[]
+  //       },
+  //       status:"error",
+  //       errors:"Invalid fields!"
+  //     }
     
 
-    };
+  //   };
 
-  const { title,content } = validatedFields.data;
+  const { title,content } = values;
   const submittedData = {
     title,
     content,
+    link:[],
+    media:mediaUrl
   }
 
 
@@ -63,11 +65,7 @@ export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promis
       user:user?.user as User,
       createPost
 
-    },{
-      content,
-      title,
-      link:[]
-    })
+    },submittedData)
     revalidatePath("/");
 
    
@@ -75,7 +73,7 @@ export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promis
       data:{
         content,
         title,
-        // link:[]
+        link:[]
       }
       ,
       status:"success",

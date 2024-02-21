@@ -48,7 +48,7 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
 
-    const { preview,setPreview } = useImageFileStore();
+    const { preview,setPreview,setFile,file} = useImageFileStore();
 
     const imageUrl = React.useMemo(() => {
       if (typeof value === 'string') {
@@ -79,6 +79,7 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
       onDrop: (acceptedFiles) => {
         const file = acceptedFiles[0];
         if (file) {
+          // setFile(file)
           void onChange?.(file);
         }
       },
@@ -165,6 +166,7 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                 e.stopPropagation();
                 void onChange?.(undefined);
                 setPreview(undefined)
+                // setFile(undefined)
               }}
             >
               <div className="flex h-5 w-5 items-center justify-center rounded-md border border-solid border-gray-500 bg-white transition-all duration-300 hover:h-6 hover:w-6 dark:border-gray-400 dark:bg-black">

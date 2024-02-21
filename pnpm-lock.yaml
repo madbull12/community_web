@@ -9,6 +9,7 @@ specifiers:
   '@radix-ui/react-avatar': ^1.0.4
   '@radix-ui/react-dropdown-menu': ^2.0.6
   '@radix-ui/react-label': ^2.0.2
+  '@radix-ui/react-progress': ^1.0.3
   '@radix-ui/react-separator': ^1.0.3
   '@radix-ui/react-slot': ^1.0.2
   '@radix-ui/react-switch': ^1.0.3
@@ -56,6 +57,7 @@ dependencies:
   '@radix-ui/react-avatar': 1.0.4_537w5qc3mwus7smjklovpom3wu
   '@radix-ui/react-dropdown-menu': 2.0.6_537w5qc3mwus7smjklovpom3wu
   '@radix-ui/react-label': 2.0.2_537w5qc3mwus7smjklovpom3wu
+  '@radix-ui/react-progress': 1.0.3_537w5qc3mwus7smjklovpom3wu
   '@radix-ui/react-separator': 1.0.3_537w5qc3mwus7smjklovpom3wu
   '@radix-ui/react-slot': 1.0.2_5djc673flukarod3uexfzwzibm
   '@radix-ui/react-switch': 1.0.3_537w5qc3mwus7smjklovpom3wu
@@ -2087,6 +2089,28 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.9
       '@radix-ui/react-slot': 1.0.2_5djc673flukarod3uexfzwzibm
+      '@types/react': 18.2.56
+      '@types/react-dom': 18.2.19
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@radix-ui/react-progress/1.0.3_537w5qc3mwus7smjklovpom3wu:
+    resolution: {integrity: sha512-5G6Om/tYSxjSeEdrb1VfKkfZfn/1IlPWd731h2RfPuSbIfNUgfqAwbKfJCg/PP6nuUCTrYzalwHSpSinoWoCag==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.9
+      '@radix-ui/react-context': 1.0.1_5djc673flukarod3uexfzwzibm
+      '@radix-ui/react-primitive': 1.0.3_537w5qc3mwus7smjklovpom3wu
       '@types/react': 18.2.56
       '@types/react-dom': 18.2.19
       react: 18.2.0

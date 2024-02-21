@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -31,29 +31,45 @@ const PostForm = () => {
     defaultValues: {
       content: "",
       title: "",
-      link:""
+      // link: [],
     },
   });
+
   const { edgestore } = useEdgeStore();
-  const { file } = useImageFileStore();
+  const { file, setFile, setPreview, setProgress, setIsUploading } =
+    useImageFileStore();
+  const resetForm = () => {
+    form.reset();
+    setFile(undefined);
+    setPreview(undefined);
+  };
   function onSubmit(values: PostSchema) {
+    console.log(values);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    let mediaUpload:any;
 
-    startTransition(async() => {
-      if(file) {
-        mediaUpload = await edgestore.publicFiles.upload({
-          file:file,
-          onProgressChange: (progress) => {
-            // you can use this to show a progress bar
-            console.log(progress);
+    startTransition(async () => {
+      try {
+        if (file) {
+          setIsUploading(true);
 
-          },
-        });
+          const res = await edgestore.publicFiles.upload({
+            file: file,
+            onProgressChange: (progress) => {
+              // you can use this to show a progress bar
+              setProgress(progress);
+              console.log(progress);
+            },
+          });
+          setIsUploading(false);
+
+          createPostAction(values, res.url);
+        } else {
+          createPostAction(values);
+        }
+      } finally {
+        resetForm();
       }
- 
-      createPostAction(values,mediaUpload.url);
     });
   }
   return (
@@ -81,9 +97,9 @@ const PostForm = () => {
         <TabsContent value="media">
           <MediaSection />
         </TabsContent>
-        <TabsContent value="link">
+        {/* <TabsContent value="link">
           <LinkSection />
-        </TabsContent>
+        </TabsContent> */}
         <Button type="submit" disabled={isPending}>
           Post
         </Button>

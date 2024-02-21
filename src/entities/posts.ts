@@ -1,7 +1,6 @@
-import { postSchema } from "@/lib/validations/posts";
 import { ZodError, z } from "zod";
 
-type ValidatedFields = "content" | "authorId";
+type ValidatedFields = "content" | "authorId" | "title";
 
 export class PostEntityValidationError extends Error {
   private errors: Record<ValidatedFields, string | undefined>;
@@ -70,12 +69,13 @@ export class PostEntity {
   }
 
   validate() {
-    // const postSchema = z.object({
-    //   title: z.string().min(1),
-    //   link: z.array(z.string().url()),
-    //   content: z.string().nullable(),
-    //   authorId: z.string().min(1),
-    // });
+    const postSchema = z.object({
+      title: z.string().min(1),
+      link: z.array(z.string()).optional(),
+      content: z.string().min(1),
+      authorId: z.string().min(1),
+      media:z.string().optional()
+    });
 
     try {
       postSchema.parse(this);
@@ -85,6 +85,7 @@ export class PostEntity {
       throw new PostEntityValidationError({
         content: errors.content?.[0],
         authorId: errors.authorId?.[0],
+        title:errors.title?.[0]
       });
     }
   }

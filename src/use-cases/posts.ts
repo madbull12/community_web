@@ -68,6 +68,7 @@ export const createPostUseCase = async (ctx: CreatePostCtx,data:{
         newPost.validate();
     } catch(err) {
         const error = err as PostEntityValidationError;
+        console.log(error)
         
         throw new ValidationError(error.getErrors());
     }
