@@ -118,8 +118,8 @@ const PostForm = () => {
           <MediaSection />
         </TabsContent>
         <TabsContent value="tags">
-          {/* <LinkSection /> */}
-          z
+          <LinkSection />
+          
         </TabsContent>
         <Button type="submit" disabled={isPending}>
           {isPending ? <Loader2Icon className="mr-2 h-4 w-4 animate-spin" /> : null}
