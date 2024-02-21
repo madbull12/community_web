@@ -2,6 +2,7 @@ import { PostDto } from "@/data-access/posts";
 import React from "react";
 import UserAvatar from "./user-avatar";
 import moment from "moment";
+import Image from "next/image";
 
 const Post = ({ post }: { post: PostDto }) => {
   console.log(post);
@@ -18,12 +19,12 @@ const Post = ({ post }: { post: PostDto }) => {
         </span>
       </div>
       <div className="mt-2">
-      <p className="text-xl font-bold">{post.title}</p>
-      <div dangerouslySetInnerHTML={{ __html: post.content as string }}>
-
+        <p className="text-xl font-bold">{post.title}</p>
+        <div dangerouslySetInnerHTML={{ __html: post.content as string }}></div>
       </div>
-      </div>
-
+      {post.media ? (
+        <Image src={post.media} alt="image" width={0} height={100} sizes={'100vw'} className="w-full h-[800px] object-cover" />
+      ):null}
     </div>
   );
 };

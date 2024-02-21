@@ -44,6 +44,7 @@ export const getPosts = async (): Promise<PostDto[]> => {
     with: {
       author: true,
     },
+    orderBy: (posts, { desc }) => [desc(posts.createdAt)],
   });
   return posts.map(toDtoMapper);
 };
@@ -77,6 +78,7 @@ export async function getPost(postId: PostId): Promise<PostDto> {
     with: {
       author: true,
     },
+    
   });
 
   if (!post) {

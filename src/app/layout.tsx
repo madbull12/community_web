@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/header/header";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 const inter = Inter({ subsets: ["latin"] });
 

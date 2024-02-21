@@ -1,6 +1,7 @@
 import { CreatePostDto, PostDto } from "@/data-access/posts";
 import { PostEntity, PostEntityValidationError } from "@/entities/posts";
 import { User } from "next-auth";
+import { redirect } from "next/navigation";
 
 // type UserProps = User;
 type CreatePost =(postDto:CreatePostDto) => void;
@@ -73,5 +74,5 @@ export const createPostUseCase = async (ctx: CreatePostCtx,data:{
         throw new ValidationError(error.getErrors());
     }
 
-    await ctx.createPost(postToCreateDtoMapper(newPost))
+    await ctx.createPost(postToCreateDtoMapper(newPost));
 };

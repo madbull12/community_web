@@ -1,17 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { BookImage, BookText, Link, ListOrdered } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import PostSection from "./post-section";
-import { useToast } from "../ui/use-toast";
-import { useFormState } from "react-dom";
-import { createPostAction } from "@/app/_actions/create_post_action";
-import MediaSection from "./media-section";
-import { Button } from "../ui/button";
-import LinkSection from "./link-section";
-import { cn } from "@/lib/utils";
+import React from "react";
+import { Tabs,  TabsList, TabsTrigger } from "../ui/tabs";
+import { BookImage, BookText, Hash, ListOrdered } from "lucide-react";
+
 import PostForm from "./post-form";
 
 const PostSubmitComponent = () => {
@@ -33,9 +25,9 @@ const PostSubmitComponent = () => {
           <BookImage size={20} />
           Image & Video
         </TabsTrigger>
-        <TabsTrigger value="link" className="flex items-center gap-x-2">
-          <Link size={20} />
-          Link
+        <TabsTrigger value="tags" className="flex items-center gap-x-2">
+        <Hash size={20}/>
+          Tags 
         </TabsTrigger>
         <TabsTrigger value="poll" className="flex items-center gap-x-2">
           <ListOrdered />
@@ -43,6 +35,7 @@ const PostSubmitComponent = () => {
         </TabsTrigger>
       </TabsList>
       <PostForm />
+      
       {/* <form
         className="p-4 bg-secondary"
         ref={formRef}

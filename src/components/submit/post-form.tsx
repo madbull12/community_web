@@ -23,8 +23,12 @@ import MediaSection from "@/components/submit/media-section";
 import LinkSection from "@/components/submit/link-section";
 import useImageFileStore from "@/store/use-image-file";
 import { useEdgeStore } from "@/lib/edgestore";
+import { useRouter } from "next/navigation";
+import {  Loader2Icon } from "lucide-react";
+import { toast } from "sonner";
 const PostForm = () => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   // const { files } = useImageFileStore();
   const form = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
@@ -34,6 +38,18 @@ const PostForm = () => {
       // link: [],
     },
   });
+
+  const toastCall = () => {
+    toast("Post has been created", {
+      // description: "Sunday, December 03, 2023 at 9:00 AM",
+      action: {
+        label: "Dismiss",
+        onClick: () => toast.dismiss(),
+      },
+      duration:2000
+
+    })
+  }
 
   const { edgestore } = useEdgeStore();
   const { file, setFile, setPreview, setProgress, setIsUploading } =
@@ -63,15 +79,19 @@ const PostForm = () => {
           });
           setIsUploading(false);
 
-          createPostAction(values, res.url);
+          createPostAction(values, res.url).then(()=>toastCall());
         } else {
-          createPostAction(values);
+          createPostAction(values).then(()=>toastCall());
+          
         }
       } finally {
         resetForm();
+        
       }
     });
+
   }
+  
   return (
     <Form {...form}>
       <form
@@ -97,10 +117,12 @@ const PostForm = () => {
         <TabsContent value="media">
           <MediaSection />
         </TabsContent>
-        {/* <TabsContent value="link">
-          <LinkSection />
-        </TabsContent> */}
+        <TabsContent value="tags">
+          {/* <LinkSection /> */}
+          z
+        </TabsContent>
         <Button type="submit" disabled={isPending}>
+          {isPending ? <Loader2Icon className="mr-2 h-4 w-4 animate-spin" /> : null}
           Post
         </Button>
       </form>
