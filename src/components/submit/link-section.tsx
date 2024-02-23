@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { PostSchema } from "@/lib/validations/posts";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,10 +23,11 @@ const LinkSection = () => {
       name="tags"
       render={({ field }) => (
         <FormItem className="flex flex-col items-start">
+          <FormLabel>Tags</FormLabel>
           <FormControl>
             <TagInput
-              showCount={true}
-              maxTags={5}
+              // showCount={true}
+              // maxTags={5}
               {...field}
               placeholder="Enter a topic"
               tags={tags}
@@ -36,6 +38,7 @@ const LinkSection = () => {
               }}
             />
           </FormControl>
+          <FormDescription>These are tags that tell about your post</FormDescription>
 
           <FormMessage />
         </FormItem>

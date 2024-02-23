@@ -26,7 +26,7 @@ specifiers:
   clsx: ^2.0.0
   cmdk: ^0.2.1
   dotenv: ^16.3.1
-  drizzle-kit: ^0.20.6
+  drizzle-kit: ^0.20.14
   drizzle-orm: ^0.29.0
   eslint: ^8
   eslint-config-next: 14.0.3

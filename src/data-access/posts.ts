@@ -4,6 +4,7 @@ import { db } from "@/lib/drizzle";
 import { Post, posts } from "@/db/schema/posts";
 import { eq, and } from "drizzle-orm";
 import { User } from "next-auth";
+import { Tag } from "@/db/schema/tags";
 
 export type PostDto = {
   id?: string;
@@ -13,7 +14,13 @@ export type PostDto = {
   createdAt:Date;
   title:string;
   media:string | null;
-  link:string[] | null;
+  postTags: {
+    postId: string;
+    tagId: string;
+    tag: {
+        tag: string;
+    };
+}[];
 };
 
 export type CreatePostDto = {
@@ -21,7 +28,6 @@ export type CreatePostDto = {
   authorId: string;
   title:string;
   media:string | null;
-  link:string[] | null;
 };
 
 export type PostId = string;
@@ -33,7 +39,7 @@ const toDtoMapper = (post: PostDto) => {
     authorId: post.authorId,
     author: post.author,
     media:post.media,
-    link:post.link,
+    postTags:post.postTags,
     title:post.title,
     createdAt:post.createdAt
   };
@@ -43,6 +49,15 @@ export const getPosts = async (): Promise<PostDto[]> => {
   const posts = await db.query.posts.findMany({
     with: {
       author: true,
+      postTags:{
+        with:{
+          tag:{
+            columns:{
+              tag:true
+            }
+          }
+        }
+      }
     },
     orderBy: (posts, { desc }) => [desc(posts.createdAt)],
   });
@@ -77,6 +92,15 @@ export async function getPost(postId: PostId): Promise<PostDto> {
     where: eq(posts.id, postId),
     with: {
       author: true,
+      postTags:{
+        with:{
+          tag:{
+            columns:{
+              tag:true
+            }
+          }
+        }
+      }
     },
     
   });
@@ -96,6 +120,15 @@ export async function getPostsByUserId(
     where: and(eq(posts.id, postId), eq(posts.authorId, userId)),
     with: {
       author: true,
+      postTags:{
+        with:{
+          tag:{
+            columns:{
+              tag:true
+            }
+          }
+        }
+      }
     },
   });
 

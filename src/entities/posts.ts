@@ -21,7 +21,7 @@ export class PostEntity {
   private authorId: string;
   private title: string;
   private media: string | null;
-  private link: string[] | null;
+  private tags: string[] | null;
 
   constructor({
     id,
@@ -29,21 +29,21 @@ export class PostEntity {
     authorId,
     title,
     media,
-    link,
+    tags,
   }: {
     id?: string;
     content: string;
     authorId: string;
     title: string;
     media: string | null;
-    link: string[] | null;
+    tags: string[] | null;
   }) {
     this.id = id;
     this.content = content;
     this.authorId = authorId;
     this.title = title;
     this.media = media;
-    this.link = link;
+    this.tags = tags;
   }
 
   getContent() {
@@ -64,17 +64,17 @@ export class PostEntity {
     return this.media;
   }
 
-  getLink() {
-    return this.link;
+  getTags() {
+    return this.tags;
   }
 
   validate() {
     const postSchema = z.object({
       title: z.string().min(1),
-      link: z.array(z.string()).optional(),
+      tags: z.array(z.string()).optional(),
       content: z.string().min(1),
       authorId: z.string().min(1),
-      media:z.string().optional()
+      media:z.string().optional(),
     });
 
     try {

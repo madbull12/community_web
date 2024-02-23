@@ -10,7 +10,7 @@ import { PostSchema, postSchema } from "@/lib/validations/posts"
 type Data = {
   content:string;
   title:string;
-  link?:string[];
+  tags?:string[];
   media?:string;
 }
 
@@ -53,7 +53,7 @@ export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promis
   const submittedData = {
     title,
     content,
-    link:[],
+    tags:[],
     media:mediaUrl
   }
 
@@ -73,7 +73,7 @@ export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promis
       data:{
         content,
         title,
-        link:[]
+        tags:[]
       }
       ,
       status:"success",
