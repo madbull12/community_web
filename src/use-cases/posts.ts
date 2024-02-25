@@ -39,7 +39,7 @@ export const postToCreateDtoMapper = (postEntity:PostEntity):CreatePostDto=> {
         authorId:postEntity.getAuthorId(),
         title:postEntity.getTitle(),
         media:postEntity.getMedia(),
-        // tags:postEntity.getTags(),
+        tags:postEntity.getTags(),
         // id:postEntity.getId() as string,
     }
 }
@@ -48,7 +48,7 @@ export const createPostUseCase = async (ctx: CreatePostCtx,data:{
     content:string,
     title:string,
     media?:string,
-    tags:string[]|null,
+    tags?:string[],
 }) => {
     const user = ctx.user
     if (!user) {

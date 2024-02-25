@@ -24,8 +24,9 @@ import LinkSection from "@/components/submit/link-section";
 import useImageFileStore from "@/store/use-image-file";
 import { useEdgeStore } from "@/lib/edgestore";
 import { useRouter } from "next/navigation";
-import {  Loader2Icon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
+import useTagStore from "@/store/use-tag-store";
 const PostForm = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -46,18 +47,31 @@ const PostForm = () => {
         label: "Dismiss",
         onClick: () => toast.dismiss(),
       },
-      duration:2000
+      duration: 2000,
+    });
+  };
 
-    })
-  }
+  const toastError = () => {
+    toast("An error occured when creating a post", {
+      // description: "Sunday, December 03, 2023 at 9:00 AM",
+      action: {
+        label: "Dismiss",
+        onClick: () => toast.dismiss(),
+      },
+      duration: 2000,
+    });
+  };
 
   const { edgestore } = useEdgeStore();
   const { file, setFile, setPreview, setProgress, setIsUploading } =
     useImageFileStore();
+
+    const { setTags } = useTagStore()
   const resetForm = () => {
     form.reset();
     setFile(undefined);
     setPreview(undefined);
+    setTags([])
   };
   function onSubmit(values: PostSchema) {
     console.log(values);
@@ -79,19 +93,22 @@ const PostForm = () => {
           });
           setIsUploading(false);
 
-          createPostAction(values, res.url).then(()=>toastCall());
+          createPostAction(values, res.url).then(() => {
+            toastCall();
+            resetForm();
+          });
         } else {
-          createPostAction(values).then(()=>toastCall());
-          
+          createPostAction(values).then(() => {
+            toastCall();
+            resetForm();
+          });
         }
-      } finally {
-        resetForm();
-        
+      } catch {
+        toastError();
       }
     });
-
   }
-  
+
   return (
     <Form {...form}>
       <form
@@ -119,10 +136,11 @@ const PostForm = () => {
         </TabsContent>
         <TabsContent value="tags">
           <LinkSection />
-          
         </TabsContent>
         <Button type="submit" disabled={isPending}>
-          {isPending ? <Loader2Icon className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isPending ? (
+            <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+          ) : null}
           Post
         </Button>
       </form>

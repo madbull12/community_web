@@ -1,10 +1,10 @@
 import "server-only";
 
 import { db } from "@/lib/drizzle";
-import { Post, posts } from "@/db/schema/posts";
+import { Post, postTags, posts } from "@/db/schema/posts";
 import { eq, and } from "drizzle-orm";
 import { User } from "next-auth";
-import { Tag } from "@/db/schema/tags";
+import { Tag, tags } from "@/db/schema/tags";
 
 export type PostDto = {
   id?: string;
@@ -28,6 +28,7 @@ export type CreatePostDto = {
   authorId: string;
   title:string;
   media:string | null;
+  tags?:string[] | null
 };
 
 export type PostId = string;
@@ -65,7 +66,19 @@ export const getPosts = async (): Promise<PostDto[]> => {
 };
 
 export async function createPost(post: CreatePostDto): Promise<void> {
-  await db.insert(posts).values(post);
+  const [insertedPost]=   await db.insert(posts).values(post).returning();
+  if(post?.tags) {
+    for (const tagName of post?.tags) {
+      // Insert tags here. This example assumes you handle the existence check of a tag separately.
+      const [insertedTag] = await db.insert(tags).values({ tag: tagName }).returning();
+    
+      // Insert the relationship into the junction table (assuming 'postTags' as your junction table).
+      await db.insert(postTags).values({
+        postId: insertedPost.id,
+        tagId: insertedTag.id
+      });
+    }
+  }
 }
 
 export async function deletePost(postId: PostId): Promise<void> {

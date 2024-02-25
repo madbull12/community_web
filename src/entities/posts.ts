@@ -21,7 +21,7 @@ export class PostEntity {
   private authorId: string;
   private title: string;
   private media: string | null;
-  private tags: string[] | null;
+  private tags: string[] | undefined;
 
   constructor({
     id,
@@ -36,7 +36,7 @@ export class PostEntity {
     authorId: string;
     title: string;
     media: string | null;
-    tags: string[] | null;
+    tags: string[] | undefined;
   }) {
     this.id = id;
     this.content = content;

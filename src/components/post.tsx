@@ -5,7 +5,7 @@ import moment from "moment";
 import Image from "next/image";
 
 const Post = ({ post }: { post: PostDto }) => {
-  console.log(post);
+  console.log(post.postTags)
   return (
     <div className="bg-secondary cursor-pointer rounded-md p-2 text-foreground border hover:border-primary border-border ">
       <div className="flex gap-x-2 items-center">

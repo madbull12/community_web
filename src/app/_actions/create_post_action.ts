@@ -49,11 +49,12 @@ export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promis
 
   //   };
 
-  const { title,content } = values;
+  const { title,content,tags } = values;
+  const mappedTags = tags?.map((tag)=>tag.text);
   const submittedData = {
     title,
     content,
-    tags:[],
+    tags:mappedTags,
     media:mediaUrl
   }
 
@@ -70,12 +71,7 @@ export const createPostAction = async(values:PostSchema,mediaUrl?:string):Promis
 
    
     return {
-      data:{
-        content,
-        title,
-        tags:[]
-      }
-      ,
+      data:submittedData,
       status:"success",
 
     };

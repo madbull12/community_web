@@ -19,8 +19,8 @@ const HomeFeed: FC = async () => {
       <div className="w-3/4">
         <CreatePostWidget user={session?.user as User} />
         <div className="display flex flex-col gap-y-4 mt-4">
-          {posts?.map((post) => (
-            <Post post={post} />
+          {posts?.map((post,i) => (
+            <Post post={post} key={i} />
           ))}
         </div>
       </div>

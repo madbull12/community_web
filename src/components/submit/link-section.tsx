@@ -11,12 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Tag, TagInput } from "@/components/ui/tag-input";
+import useTagStore from "@/store/use-tag-store";
 
 const LinkSection = () => {
   const form = useFormContext<PostSchema>();
   const [tags, setTags] = React.useState<Tag[]>([]);
 
   const { setValue } = form;
+
   return (
     <FormField
       control={form.control}
