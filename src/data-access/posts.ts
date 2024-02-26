@@ -2,7 +2,7 @@ import "server-only";
 
 import { db } from "@/lib/drizzle";
 import { Post, postTags, posts } from "@/db/schema/posts";
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { User } from "next-auth";
 import { Tag, tags } from "@/db/schema/tags";
 
@@ -11,24 +11,24 @@ export type PostDto = {
   content: string | null;
   authorId?: string;
   author: User;
-  createdAt:Date;
-  title:string;
-  media:string | null;
+  createdAt: Date;
+  title: string;
+  media: string | null;
   postTags: {
     postId: string;
     tagId: string;
     tag: {
-        tag: string;
+      tag: string;
     };
-}[];
+  }[];
 };
 
 export type CreatePostDto = {
   content: string;
   authorId: string;
-  title:string;
-  media:string | null;
-  tags?:string[] | null
+  title: string;
+  media: string | null;
+  tags?: string[] | null
 };
 
 export type PostId = string;
@@ -39,10 +39,10 @@ const toDtoMapper = (post: PostDto) => {
     content: post.content,
     authorId: post.authorId,
     author: post.author,
-    media:post.media,
-    postTags:post.postTags,
-    title:post.title,
-    createdAt:post.createdAt
+    media: post.media,
+    postTags: post.postTags,
+    title: post.title,
+    createdAt: post.createdAt
   };
 };
 
@@ -50,11 +50,11 @@ export const getPosts = async (): Promise<PostDto[]> => {
   const posts = await db.query.posts.findMany({
     with: {
       author: true,
-      postTags:{
-        with:{
-          tag:{
-            columns:{
-              tag:true
+      postTags: {
+        with: {
+          tag: {
+            columns: {
+              tag: true
             }
           }
         }
@@ -66,12 +66,24 @@ export const getPosts = async (): Promise<PostDto[]> => {
 };
 
 export async function createPost(post: CreatePostDto): Promise<void> {
-  const [insertedPost]=   await db.insert(posts).values(post).returning();
-  if(post?.tags) {
+  const [insertedPost] = await db.insert(posts).values(post).returning();
+  if (post?.tags) {
+
+    const existingTags = await db
+      .select({ id: tags.id, tags: tags.tag })
+      .from(tags)
+      .where(inArray(tags.tag, post?.tags));
+
+      if(existingTags) {
+        for (const tag of existingTags) {
+          await db.insert(postTags).values({ postId: insertedPost.id, tagId: tag.id }).execute();
+        }
+      }
+
     for (const tagName of post?.tags) {
       // Insert tags here. This example assumes you handle the existence check of a tag separately.
       const [insertedTag] = await db.insert(tags).values({ tag: tagName }).returning();
-    
+
       // Insert the relationship into the junction table (assuming 'postTags' as your junction table).
       await db.insert(postTags).values({
         postId: insertedPost.id,
@@ -105,17 +117,17 @@ export async function getPost(postId: PostId): Promise<PostDto> {
     where: eq(posts.id, postId),
     with: {
       author: true,
-      postTags:{
-        with:{
-          tag:{
-            columns:{
-              tag:true
+      postTags: {
+        with: {
+          tag: {
+            columns: {
+              tag: true
             }
           }
         }
       }
     },
-    
+
   });
 
   if (!post) {
@@ -133,11 +145,11 @@ export async function getPostsByUserId(
     where: and(eq(posts.id, postId), eq(posts.authorId, userId)),
     with: {
       author: true,
-      postTags:{
-        with:{
-          tag:{
-            columns:{
-              tag:true
+      postTags: {
+        with: {
+          tag: {
+            columns: {
+              tag: true
             }
           }
         }

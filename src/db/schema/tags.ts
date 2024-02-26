@@ -4,7 +4,7 @@ import { postTags } from "./";
 
 export const tags = pgTable("tags",{
     id: text("id").notNull().primaryKey().default(sql`gen_random_uuid()`),
-	tag:text("tag").notNull(),
+	tag:text("tag").notNull().unique(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

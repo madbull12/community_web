@@ -25,6 +25,11 @@ const Post = ({ post }: { post: PostDto }) => {
       {post.media ? (
         <Image src={post.media} alt="image" width={0} height={100} sizes={'100vw'} className="w-full h-[800px] object-cover" />
       ):null}
+      <div className="flex items-center gap-x-2">
+        {post.postTags.map(({ tag:{tag}})=>(
+          <p>#{tag}</p>
+        ))}
+      </div>
     </div>
   );
 };
