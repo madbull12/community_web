@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import {DndContext} from '@dnd-kit/core';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,8 +29,10 @@ export default async function RootLayout({
         <EdgeStoreProvider>
           <Header user={session?.user} />
           {children}
+
           <Toaster />
         </EdgeStoreProvider>
+
       </body>
     </html>
   );

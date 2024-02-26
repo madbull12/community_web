@@ -117,7 +117,7 @@ export const Tag: React.FC<TagProps> = ({
       )}
       onClick={() => onTagClick?.(tagObj)}
     >
-      {tagObj.text}
+      #{tagObj.text}
       <Button
         type="button"
         variant="ghost"

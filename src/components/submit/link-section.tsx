@@ -31,7 +31,7 @@ const LinkSection = () => {
               // showCount={true}
               // maxTags={5}
               {...field}
-              placeholder="Enter a topic"
+              placeholder="Enter a tag"
               tags={tags}
               className="sm:min-w-[450px]"
               setTags={(newTags) => {
@@ -40,7 +40,7 @@ const LinkSection = () => {
               }}
             />
           </FormControl>
-          <FormDescription>These are tags that tell about your post</FormDescription>
+          <FormDescription>These are tags that tell about your post (Click Enter to submit some tags)</FormDescription>
 
           <FormMessage />
         </FormItem>

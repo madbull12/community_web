@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
 import useTagStore from "@/store/use-tag-store";
+import PollSection from "./poll-section";
 const PostForm = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -96,11 +97,13 @@ const PostForm = () => {
           createPostAction(values, res.url).then(() => {
             toastCall();
             resetForm();
+            router.push('/')
           });
         } else {
           createPostAction(values).then(() => {
             toastCall();
             resetForm();
+            router.push('/')
           });
         }
       } catch {
@@ -136,6 +139,9 @@ const PostForm = () => {
         </TabsContent>
         <TabsContent value="tags">
           <LinkSection />
+        </TabsContent>
+        <TabsContent value="poll">
+          <PollSection />
         </TabsContent>
         <Button type="submit" disabled={isPending}>
           {isPending ? (

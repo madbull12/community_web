@@ -23,6 +23,7 @@ const PostSection = () => {
           <FormControl>
             <ReactQuill
               // id="content"
+              placeholder="Text(optional)"
               theme="snow"
               style={{}}
               {...field}
